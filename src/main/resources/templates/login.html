@@ -12,6 +12,8 @@
 
 <form th:action="@{/login}" method="post">
     <div>
+        <button onclick="redirectToMain_Visible()">Home Page</button>
+        <br>
         <label for="username">USERNAME:</label>
         <input type="text" id="username" name="username" required />
     </div>
@@ -25,3 +27,8 @@
 </form>
 </body>
 </html>
+<script>
+    function redirectToMain_Visible() {
+        window.location.href = '/main_visible';
+    }
+</script>

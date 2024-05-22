@@ -13,8 +13,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class HomeController {
     @Autowired
     private IBookService bookService;
-    @GetMapping({"/home"})
-    public String home() {
+//    @GetMapping({"/home"})
+//    public String home() {
+//        return "home";
+//    }
+
+    @RequestMapping(path = { "/home"}, method = RequestMethod.GET)
+    public String home(Model model){
+        model.addAttribute("books", this.bookService.getAll());
         return "home";
     }
 
