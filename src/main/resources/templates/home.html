@@ -2,9 +2,25 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Strona główna</title>
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+        }
+        h1 {
+            background-color: red;
+            padding: 10px;
+        }
+        p {
+            font-size: 18px;
+        }
+        form {
+            margin-top: 20px;
+        }
+    </style>
 </head>
 <body>
-<h1 style="background-color:red">HOME PAGE</h1>
+<h1>HOME PAGE</h1>
 <p>LOGGED IN</p>
 <form th:action="@{/logout}" method="post">
     <button type="submit">LOG OUT</button>
