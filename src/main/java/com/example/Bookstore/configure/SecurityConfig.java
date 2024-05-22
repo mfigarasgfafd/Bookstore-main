@@ -14,15 +14,14 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class SecurityConfig {
 
-
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/register", "/login").permitAll()
+                        .requestMatchers("/register", "/login", "/index", "/main_visible").permitAll()
                         .requestMatchers("/admin/**").hasAuthority("ADMIN")
                         .requestMatchers("/book/**").hasAuthority("ADMIN")
-                        .requestMatchers("/", "/main", "/index").permitAll()
+                        // /home accessible only to logged in users, main_visible visible to all
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
@@ -34,11 +33,8 @@ public class SecurityConfig {
         return http.build();
     }
 
-
-
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
 }

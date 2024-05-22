@@ -18,12 +18,18 @@ public class HomeController {
         return "home";
     }
 
+    @RequestMapping(path = { "/main_visible"}, method = RequestMethod.GET)
+    public String main_visible(Model model){
+        model.addAttribute("books", this.bookService.getAll());
+        return "main_visible";
+    }
+
 //    @GetMapping("/admin/adminpanel")
 //    public String adminpanel() {
 //        return "adminpanel";
 //    }
 
-    @RequestMapping(path = {"/", "/main", "/index"}, method = RequestMethod.GET)
+    @RequestMapping(path = {"/", "/index"}, method = RequestMethod.GET)
     public String main(Model model){
         model.addAttribute("books", this.bookService.getAll());
         return "home";

@@ -5,6 +5,8 @@
 <body>
 <div>
   <h1> main - visible </h1>
+  <button onclick="redirectToLogin()">Login</button>
+
   <div th:each="book : ${books}">
     <div th:text="${book.id}"></div>
     <div th:text="${book.title}"></div>
@@ -15,3 +17,8 @@
 </div>
 </body>
 </html>
+<script>
+  function redirectToLogin() {
+    window.location.href = '/login';
+  }
+</script>
