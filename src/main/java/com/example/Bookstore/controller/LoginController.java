@@ -11,10 +11,10 @@ public class LoginController {
     @GetMapping({"/login", "/logout"})
     public String login(@RequestParam(value = "error", required = false) String error,
                         @RequestParam(value = "logout", required = false) String logout,
-                        @RequestParam(value = "message", required = false) String message,
+                        @RequestParam(value = "register", required = false) String registered,
                         Model model) {
-        if ( message!=null){
-            model.addAttribute("message",message);
+        if(registered != null) {
+            model.addAttribute("registeredMessage", "You have created a new account.");
         }
         if (error != null) {
             model.addAttribute("message", "incorrect username or password");
@@ -22,6 +22,7 @@ public class LoginController {
         if (logout != null) {
             model.addAttribute("message", "logged out");
         }
+
         return "login";
     }
 }

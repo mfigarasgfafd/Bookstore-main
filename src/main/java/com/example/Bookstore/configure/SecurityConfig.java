@@ -1,5 +1,6 @@
 package com.example.Bookstore.configure;
 
+import com.example.Bookstore.service.CustomLoginSuccessHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -18,16 +19,15 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(auth -> auth
-
-                        .requestMatchers("/login", "/register").permitAll()
+                        .requestMatchers("/register", "/login").permitAll()
                         .requestMatchers("/admin/**").hasAuthority("ADMIN")
+                        .requestMatchers("/book/**").hasAuthority("ADMIN")
+                        .requestMatchers("/", "/main", "/index").permitAll()
                         .anyRequest().authenticated()
-
                 )
-                .headers(headers->headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin))
                 .formLogin(form -> form
                         .loginPage("/login")
-                        .defaultSuccessUrl("/home", true)
+                        .successHandler(new CustomLoginSuccessHandler())
                         .permitAll()
                 )
                 .logout(logout -> logout.permitAll());
