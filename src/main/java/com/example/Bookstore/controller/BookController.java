@@ -33,6 +33,7 @@ public class BookController {
         if(bookOpt.isEmpty()) {
             return "redirect:/main";
         }
+        this.bookService.delete(id);
         model.addAttribute("book", bookOpt.get());
         return "book-form";
     }
