@@ -25,11 +25,13 @@
 <div>
     <h1> main - logged in </h1>
     <div th:each="book : ${books}">
-        <div th:text="${book.id}"></div>
+        <div th:text="${'ID: ' + book.id}"></div>
         <div th:text="${book.title}"></div>
         <div th:text="${book.author}"></div>
         <div th:text="${'Cena: ' + book.price + ' zł'}"></div>
         <div th:text="${'Ilość: ' + book.quantity}"></div>
+        <a th:href="@{/cart/add/{bookId}/1(bookId=${book.id})}">Add to Cart</a>
+
     </div>
 </div>
 
@@ -37,5 +39,12 @@
 <form th:action="@{/logout}" method="post">
     <button type="submit">LOG OUT</button>
 </form>
+<button onclick="redirectToCart()">CART</button>
+<br>
 </body>
 </html>
+<script>
+    function redirectToCart() {
+        window.location.href = '/cart';
+    }
+</script>

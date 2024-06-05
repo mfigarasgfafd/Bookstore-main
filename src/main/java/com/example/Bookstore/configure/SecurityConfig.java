@@ -18,9 +18,10 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/register", "/login", "/index", "/main_visible").permitAll()
+                        .requestMatchers("/register", "/login", "/index", "/main_visible", "/cart").permitAll()
                         .requestMatchers("/admin/**").hasAuthority("ADMIN")
                         .requestMatchers("/book/**").hasAuthority("ADMIN")
+
                         // /home accessible only to logged in users, main_visible visible to all
                         .anyRequest().authenticated()
                 )
