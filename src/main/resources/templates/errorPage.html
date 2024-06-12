@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+</head>
+<body>
+<div>
+  <h1> Insufficient amount of books in stock to fulfill order </h1>
+  <button onclick="redirectToLogin()">Login</button>
+  <button onclick="redirectToHome()">Home</button>
+</div>
+</body>
+</html>
+
+<script>
+  function redirectToLogin() {
+    window.location.href = '/login';
+  }
+</script>
+<script>
+  function redirectToHome() {
+    window.location.href = '/home';
+  }
+</script>

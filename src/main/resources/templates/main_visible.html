@@ -6,6 +6,7 @@
 <div>
   <h1> main - visible </h1>
   <button onclick="redirectToLogin()">Login</button>
+  <button onclick="redirectToRegister()">Register</button>
 
   <div th:each="book : ${books}">
     <div th:text="${book.id}"></div>
@@ -20,5 +21,10 @@
 <script>
   function redirectToLogin() {
     window.location.href = '/login';
+  }
+</script>
+<script>
+  function redirectToRegister() {
+    window.location.href = '/register';
   }
 </script>

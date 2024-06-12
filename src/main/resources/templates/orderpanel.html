@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<table>
+  <tr>
+    <th>Order ID</th>
+    <th>User ID</th>
+    <th>Status</th>
+    <th>Action</th>
+  </tr>
+  <tr th:each="order : ${orders}">
+    <td th:text="${order.id}"></td>
+    <td th:text="${order.user.id}"></td>
+    <td th:text="${order.status}"></td>
+    <td>
+      <form th:action="@{/orders/{id}(id=${order.id})}" method="post">
+        <select name="status">
+          <option th:selected="${order.status == 'SUBMITTED'}" value="SUBMITTED">Submitted</option>
+          <option th:selected="${order.status == 'PAID'}" value="PAID">Paid</option>
+          <option th:selected="${order.status == 'SHIPPED'}" value="SHIPPED">Shipped</option>
+          <option th:selected="${order.status == 'COMPLETED'}" value="COMPLETED">Completed</option>
+        </select>
+        <input type="submit" value="Update Status">
+      </form>
+
+
+    </td>
+  </tr>
+</table>
+
+<button onclick="redirectToPanel()">MAIN ADMIN PANEL</button>
+
+
+</body>
+</html>
+
+<script>
+  function redirectToPanel() {
+    window.location.href = '/admin/adminpanel';
+  }
+</script>

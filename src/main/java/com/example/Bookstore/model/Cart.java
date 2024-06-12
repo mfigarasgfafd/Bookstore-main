@@ -3,6 +3,8 @@ package com.example.Bookstore.model;
 import com.example.Bookstore.service.CartService;
 import jakarta.persistence.Entity;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,9 +14,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+
 @Entity
 public class Cart {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -23,34 +25,54 @@ public class Cart {
     @OneToOne(mappedBy = "cart")
     private User user;
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public List<CartItem> getItems() {
+        return items;
+    }
+
+    public void setItems(List<CartItem> items) {
+        this.items = items;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 
     public void addItem(Book book, int quantity) {
-        CartItem cartItem = new CartItem(this, book, quantity);
-        for (CartItem i : items) {
-            if (i.getBook().equals(book)) {
-                i.setQuantity(i.getQuantity() + quantity);
+        for (CartItem item : this.items) {
+            if (item.getBook().equals(book)) {
+                item.setQuantity(item.getQuantity() + quantity);
                 return;
             }
         }
-        items.add(cartItem);
+        CartItem cartItem = new CartItem();
+        cartItem.setBook(book);
+        cartItem.setQuantity(quantity);
+        cartItem.setCart(this);
+        this.items.add(cartItem);
     }
 
-
     public void removeItem(Book book) {
-        for (CartItem i : items) {
-            if (i.getBook().equals(book)) {
-                int newQuantity = i.getQuantity() - 1;
-                if (newQuantity < 1) {
-                    items.remove(i);
+        for (CartItem item : this.items) {
+            if (item.getBook().equals(book)) {
+                if (item.getQuantity() > 1) {
+                    item.setQuantity(item.getQuantity() - 1);
                 } else {
-                    i.setQuantity(newQuantity);
+                    this.items.remove(item);
                 }
                 break;
             }
         }
     }
-    public List<CartItem> getItems() {
-        return items;
-    }
-
 }

@@ -43,7 +43,6 @@ public class CustomUserService implements UserService{
         user.setCart(new Cart());
         Role userRole =
                 roleRepository.findByName("USER").orElse(null);
-        //System.out.println(userRole.getName());
         if (userRole != null) {
             user.getRoles().add(userRole);
         }

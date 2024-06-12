@@ -25,13 +25,23 @@
         </form>
       </td>
     </tr>
+    <form th:action="@{/order/submit}" method="post">
+      <button type="submit">Submit Order</button>
+    </form>
     </tbody>
   </table>
 </div>
+<button onclick="redirectToHistory()">ORDER HISTORY</button>
+<br>
 <button onclick="redirectToHome()">HOME PAGE</button>
 <br>
 <script>
   function redirectToHome() {
     window.location.href = '/home';
+  }
+</script>
+<script>
+  function redirectToHistory() {
+    window.location.href = '/order/history';
   }
 </script>
