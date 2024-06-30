@@ -1,47 +1,82 @@
-<h1>Koszyk</h1>
-<div th:if="${cart.items.isEmpty()}">
-  <p>Koszyk pusty.</p>
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Koszyk</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light" th:fragment="navbar">
+  <a class="navbar-brand" href="#">Księgarnia</a>
+  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav"
+          aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" href="/">Strona główna</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/cart">Koszyk</a>
+      </li>
+      <li class="nav-item" th:if="${#authentication.name == 'anonymousUser'}">
+        <a class="nav-link" href="/login">Login</a>
+      </li>
+      <li class="nav-item" th:if="${#authentication.name != 'anonymousUser'}">
+        <a class="nav-link" href="/logout">Logout</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/register">Register</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<div class="container mt-5">
+  <h1 class="text-center">Koszyk</h1>
+  <div th:if="${cart.items.isEmpty()}" class="alert alert-info text-center">
+    <p>Koszyk pusty.</p>
+  </div>
+  <div th:unless="${cart.items.isEmpty()}">
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th>Tytuł</th>
+        <th>Autor</th>
+        <th>Cena</th>
+        <th>Ilość</th>
+        <th>Usuń</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="item : ${cart.items}">
+        <td th:text="${item.book.title}"></td>
+        <td th:text="${item.book.author}"></td>
+        <td th:text="${item.book.price}"></td>
+        <td th:text="${item.quantity}"></td>
+        <td>
+          <form th:action="@{/cart/remove/{bookId}(bookId=${item.book.id})}" method="get">
+            <button type="submit" class="btn btn-danger btn-sm">usuń</button>
+          </form>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+    <div class="d-grid gap-2">
+      <form th:action="@{/order/submit}" method="post">
+        <button type="submit" class="btn btn-primary">Submit Order</button>
+      </form>
+      <button class="btn btn-secondary" onclick="redirectToHistory()">ORDER HISTORY</button>
+    </div>
+  </div>
 </div>
-<div th:unless="${cart.items.isEmpty()}">
-  <table>
-    <thead>
-    <tr>
-      <th>Tytuł</th>
-      <th>Autor</th>
-      <th>Cena</th>
-      <th>Ilość</th>
-      <th>Usuń</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="item : ${cart.items}">
-      <td th:text="${item.book.title}"></td>
-      <td th:text="${item.book.author}"></td>
-      <td th:text="${item.book.price}"></td>
-      <td th:text="${item.quantity}"></td>
-      <td>
-        <form th:action="@{/cart/remove/{bookId}(bookId=${item.book.id})}" method="get">
-          <button type="submit">usuń</button>
-        </form>
-      </td>
-    </tr>
-    <form th:action="@{/order/submit}" method="post">
-      <button type="submit">Submit Order</button>
-    </form>
-    </tbody>
-  </table>
-</div>
-<button onclick="redirectToHistory()">ORDER HISTORY</button>
-<br>
-<button onclick="redirectToHome()">HOME PAGE</button>
-<br>
-<script>
-  function redirectToHome() {
-    window.location.href = '/home';
-  }
-</script>
 <script>
   function redirectToHistory() {
     window.location.href = '/order/history';
   }
 </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

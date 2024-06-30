@@ -30,10 +30,9 @@ public class BookController {
     @RequestMapping(path = {"/update/{id}"}, method = RequestMethod.GET)
     public String update(@PathVariable int id, Model model) {
         Optional<Book> bookOpt = this.bookService.getById(id);
-        if(bookOpt.isEmpty()) {
+        if (bookOpt.isEmpty()) {
             return "redirect:/main";
         }
-        this.bookService.delete(id);
         model.addAttribute("book", bookOpt.get());
         return "book-form";
     }

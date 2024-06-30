@@ -1,14 +1,74 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Update Book</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
+</head>
 <body>
-<div>
-  <form th:action="@{/book/add}" th:object="${book}" method="post">
-    <input type="text" placeholder="Tytuł" class="input-field" th:field="*{title}" id="title">
-    <input type="text" placeholder="Autor" class="input-field" th:field="*{author}" id="author">
-    <input type="text" placeholder="Cena" class="input-field" th:field="*{price}" id="price">
-    <input type="text" placeholder="Ilość" class="input-field" th:field="*{quantity}" id="quantity">
-    <input type="submit" value="Dodaj">
+<div class="container mt-5">
+  <h1 class="text-center">Update Book</h1>
+  <form th:action="@{/book/update/{id}(id=${book.id})}" th:object="${book}" method="post" class="needs-validation" novalidate>
+    <input type="hidden" th:field="*{id}" />
+    <div class="mb-3">
+      <label for="title" class="form-label">Title</label>
+      <input type="text" class="form-control" id="title" th:field="*{title}" required />
+      <div class="invalid-feedback">
+        Please provide a title.
+      </div>
+    </div>
+    <div class="mb-3">
+      <label for="author" class="form-label">Author</label>
+      <input type="text" class="form-control" id="author" th:field="*{author}" required />
+      <div class="invalid-feedback">
+        Please provide an author.
+      </div>
+    </div>
+    <div class="mb-3">
+      <label for="price" class="form-label">Price</label>
+      <input type="text" class="form-control" id="price" th:field="*{price}" required />
+      <div class="invalid-feedback">
+        Please provide a price.
+      </div>
+    </div>
+    <div class="mb-3">
+      <label for="quantity" class="form-label">Quantity</label>
+      <input type="text" class="form-control" id="quantity" th:field="*{quantity}" required />
+      <div class="invalid-feedback">
+        Please provide a quantity.
+      </div>
+    </div>
+    <div class="mb-3">
+      <label for="image" class="form-label">Image</label>
+      <input type="text" class="form-control" id="image" th:field="*{image}" required />
+      <div class="invalid-feedback">
+        Please provide an image URL.
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Save</button>
   </form>
 </div>
+<script>
+  // Example starter JavaScript for disabling form submissions if there are invalid fields
+  (function () {
+    'use strict'
+
+    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+    var forms = document.querySelectorAll('.needs-validation')
+
+    // Loop over them and prevent submission
+    Array.prototype.slice.call(forms)
+            .forEach(function (form) {
+              form.addEventListener('submit', function (event) {
+                if (!form.checkValidity()) {
+                  event.preventDefault()
+                  event.stopPropagation()
+                }
+
+                form.classList.add('was-validated')
+              }, false)
+            })
+  })()
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

@@ -1,33 +1,75 @@
-<h1>Order Details</h1>
-<p>Order ID: <span
-        th:text="${order.id}"></span></p>
-<p>Date: <span
-        th:text="${order.date}"></span></p>
-<p>Status: <span
-        th:text="${order.status}"></span></p>
-<h2>Items</h2>
-<table>
-  <thead>
-  <tr>
-    <th>Title</th>
-    <th>Author</th>
-    <th>Price</th>
-    <th>Quantity</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr th:each="item : ${order.items}">
-    <td th:text="${item.book.title}"></td>
-    <td th:text="${item.book.author}"></td>
-    <td th:text="${item.book.price}"></td>
-    <td th:text="${item.quantity}"></td>
-  </tr>
-  <button onclick="redirectToHome()">HOME PAGE</button>
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Order Details</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
 
-  </tbody>
-</table>
+<nav class="navbar navbar-expand-lg navbar-light bg-light" th:fragment="navbar">
+  <a class="navbar-brand" href="#">Księgarnia</a>
+  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav"
+          aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" href="/">Strona główna</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/cart">Koszyk</a>
+      </li>
+      <li class="nav-item" th:if="${#authentication.name == 'anonymousUser'}">
+        <a class="nav-link" href="/login">Login</a>
+      </li>
+      <li class="nav-item" th:if="${#authentication.name != 'anonymousUser'}">
+        <a class="nav-link" href="/logout">Logout</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/register">Register</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<div class="container mt-5">
+  <h1 class="text-center">Order Details</h1>
+  <div class="card">
+    <div class="card-body">
+      <p><strong>Order ID:</strong> <span th:text="${order.id}"></span></p>
+      <p><strong>Date:</strong> <span th:text="${order.date}"></span></p>
+      <p><strong>Status:</strong> <span th:text="${order.status}"></span></p>
+      <h2>Items</h2>
+      <table class="table table-striped">
+        <thead>
+        <tr>
+          <th>Title</th>
+          <th>Author</th>
+          <th>Price</th>
+          <th>Quantity</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="item : ${order.items}">
+          <td th:text="${item.book.title}"></td>
+          <td th:text="${item.book.author}"></td>
+          <td th:text="${item.book.price}"></td>
+          <td th:text="${item.quantity}"></td>
+        </tr>
+        </tbody>
+      </table>
+      <div class="text-center mt-3">
+        <button class="btn btn-primary" onclick="redirectToHome()">HOME PAGE</button>
+      </div>
+    </div>
+  </div>
+</div>
 <script>
   function redirectToHome() {
     window.location.href = '/home';
   }
 </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

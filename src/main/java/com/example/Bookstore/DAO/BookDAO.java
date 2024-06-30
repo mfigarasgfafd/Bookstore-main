@@ -40,11 +40,10 @@ public class BookDAO implements IBookDAO{
 
     @Override
     public void saveOrUpdate(Book book) {
-        System.out.println("BOOOK "+book);
-        if ( getById(book.getId()).isEmpty() ) {
-            entityManager.persist(book);
-        } else {
+        if (book.getId() != 0 && getById(book.getId()).isPresent()) {
             entityManager.merge(book);
+        } else {
+            entityManager.persist(book);
         }
     }
 

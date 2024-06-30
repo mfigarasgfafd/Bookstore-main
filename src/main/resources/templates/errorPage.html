@@ -1,23 +1,54 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
+  <title>Error</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-<div>
-  <h1> Insufficient amount of books in stock to fulfill order </h1>
-  <button onclick="redirectToLogin()">Login</button>
-  <button onclick="redirectToHome()">Home</button>
-</div>
-</body>
-</html>
+<nav class="navbar navbar-expand-lg navbar-light bg-light" th:fragment="navbar">
+  <a class="navbar-brand" href="#">Księgarnia</a>
+  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav"
+          aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" href="/main_visible">Strona główna</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/cart">Koszyk</a>
+      </li>
+      <li class="nav-item" th:if="${#authentication.name == 'anonymousUser'}">
+        <a class="nav-link" href="/login">Login</a>
+      </li>
+      <li class="nav-item" th:if="${#authentication.name != 'anonymousUser'}">
+        <a class="nav-link" href="/logout">Logout</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/register">Register</a>
+      </li>
+    </ul>
+  </div>
+</nav>
 
+<div class="container mt-5">
+  <div class="alert alert-danger text-center">
+    <h1>Insufficient amount of books in stock to fulfill order</h1>
+  </div>
+  <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+    <button class="btn btn-primary me-md-2" onclick="redirectToLogin()">Login</button>
+    <button class="btn btn-secondary" onclick="redirectToHome()">Home</button>
+  </div>
+</div>
 <script>
   function redirectToLogin() {
     window.location.href = '/login';
   }
-</script>
-<script>
   function redirectToHome() {
     window.location.href = '/home';
   }
 </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
