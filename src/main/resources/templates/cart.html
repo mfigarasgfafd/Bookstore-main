@@ -6,7 +6,6 @@
 </head>
 <body>
 
-
 <nav class="navbar navbar-expand-lg navbar-light bg-light" th:fragment="navbar">
   <a class="navbar-brand" href="#">Księgarnia</a>
   <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav"
@@ -16,7 +15,7 @@
   <div class="collapse navbar-collapse" id="navbarNav">
     <ul class="navbar-nav">
       <li class="nav-item">
-        <a class="nav-link" href="/">Strona główna</a>
+        <a class="nav-link" href="/home">Strona główna</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="/cart">Koszyk</a>
@@ -70,6 +69,7 @@
       </form>
       <button class="btn btn-secondary" onclick="redirectToHistory()">ORDER HISTORY</button>
     </div>
+    <h3>Total Cost: <span th:text="${cart.totalCost}"></span></h3>
   </div>
 </div>
 <script>

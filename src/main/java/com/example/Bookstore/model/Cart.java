@@ -10,10 +10,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
+import java.lang.Math;
 
 @Entity
 public class Cart {
@@ -24,6 +25,14 @@ public class Cart {
     private List<CartItem> items = new ArrayList<>();
     @OneToOne(mappedBy = "cart")
     private User user;
+
+    public BigDecimal getTotalCost() {
+        BigDecimal totalCost = BigDecimal.ZERO;
+        for (CartItem item : this.items) {
+            totalCost = totalCost.add(item.getBook().getPrice().multiply(new BigDecimal(item.getQuantity())));
+        }
+        return totalCost;
+    }
 
     public Long getId() {
         return id;

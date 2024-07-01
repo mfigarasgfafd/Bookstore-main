@@ -15,23 +15,23 @@ public class CartController {
     @Autowired
     private CartService cartService;
 
-
     @GetMapping("/add/{bookId}/{quantity}")
     public String addToCart(@PathVariable int bookId, @PathVariable int quantity) {
         cartService.addToCart(bookId, quantity);
         return "redirect:/cart";
     }
+
     @GetMapping
     public String getCart(Model model) {
         Cart cart = cartService.getCart();
         model.addAttribute("cart", cart);
+        model.addAttribute("totalCost", cart.getTotalCost());
         return "cart";
     }
+
     @GetMapping("/remove/{bookId}")
     public String removeFromCart(@PathVariable int bookId) {
         cartService.removeFromCart(bookId);
         return "redirect:/cart";
     }
-
-
 }
